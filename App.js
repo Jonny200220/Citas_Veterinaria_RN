@@ -1,20 +1,70 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { View, Text, SafeAreaView, StyleSheet, Pressable, Modal} from 'react-native'
+import { useState } from 'react';
 
-export default function App() {
+
+const App = () => {
+
+  // Hooks
+  const [ modalVisible, setModalVisible ] = useState(false)
+
+  const nuevaCitaHandler = () => {
+    console.log('Diste click');
+    
+  }
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+    <SafeAreaView style={styles.container}>
+      <Text style={styles.Header}>Administrador de 
+        Citas {''}
+          <Text style={styles.boldHeader}>Veterinaria</Text>
+      </Text>
+
+      <Pressable style={styles.btnNewCita} onPress={nuevaCitaHandler}>
+        <Text style={styles.textBtnNewCita} >Nueva Cita</Text>
+      </Pressable>
+
+      <Modal
+        animationType='slide'
+        visible={modalVisible}
+          
+      >
+        <Text>Desde el Modal</Text>
+      </Modal>
+      
+    </SafeAreaView>
+  )
 }
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: '#F3F4F6',
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
-});
+  Header: {
+    textAlign: 'center',
+    fontSize: 30,
+    color: '#374151',
+    fontWeight: '600',
+    marginTop:40
+  },
+  boldHeader: {
+    fontWeight: '900',
+    color: '#6D28D9'
+  },
+  btnNewCita: {
+    backgroundColor: '#6D28D9',
+    padding: 15,
+    marginTop: 20,
+    marginHorizontal: 20,
+    borderRadius: 10,
+
+  },
+  textBtnNewCita: {
+    textAlign: 'center',
+    color: '#fff',
+    fontSize: 20,
+    fontWeight: '900',
+    textTransform: 'uppercase'
+  }
+})
+
+export default App
