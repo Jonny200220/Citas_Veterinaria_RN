@@ -1,16 +1,13 @@
 import { View, Text, SafeAreaView, StyleSheet, Pressable, Modal} from 'react-native'
 import { useState } from 'react';
+import Formulario from './src/components/Formulario';
 
 
 const App = () => {
 
   // Hooks
-  const [ modalVisible, setModalVisible ] = useState(false)
-
-  const nuevaCitaHandler = () => {
-    console.log('Diste click');
-    
-  }
+  const [modalVisible, setModalVisible] = useState(false)
+  
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.Header}>Administrador de 
@@ -18,20 +15,13 @@ const App = () => {
           <Text style={styles.boldHeader}>Veterinaria</Text>
       </Text>
 
-      <Pressable style={styles.btnNewCita} onPress={nuevaCitaHandler}>
+      <Pressable style={styles.btnNewCita} onPress={() => setModalVisible(true)}>
         <Text style={styles.textBtnNewCita} >Nueva Cita</Text>
       </Pressable>
+      <Formulario modalVisible={modalVisible}/>
 
-      <Modal
-        animationType='slide'
-        visible={modalVisible}
-          
-      >
-        <Text>Desde el Modal</Text>
-      </Modal>
-      
     </SafeAreaView>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
