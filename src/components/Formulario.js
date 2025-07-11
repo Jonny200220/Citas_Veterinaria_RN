@@ -1,5 +1,7 @@
-import { View, Modal, StyleSheet, TextInput, Text, ScrollView } from 'react-native';
+import { View, Modal, StyleSheet, TextInput, Text, ScrollView, Pressable } from 'react-native';
 import React, { useState } from 'react';
+import DatePicker from 'react-native-date-picker';
+
 
 const Formulario = ({ modalVisible }) => {
     
@@ -8,16 +10,22 @@ const Formulario = ({ modalVisible }) => {
     const [telefonoPropietario, setTelefonoPropietario] = useState('');
     const [emailPropietario, setEmailPropietario] = useState('');
     const [sitnomas, setSitnomas] = useState('');
+    const [fecha, setFecha] = useState(new Date());
 
   return (
 
         <Modal animationType='slide' visible={modalVisible}>
+            
             <View style={styles.container}>
                 <ScrollView>
                     <Text style={styles.Header}>
                     Nueva {''}
                     <Text style={styles.BoldHeader}>Cita</Text>
                     </Text>
+
+                    <Pressable style={styles.btnCancel}>
+                        <Text style={styles.btnCancelText}>X Cancelar</Text>
+                    </Pressable>
 
                     <View style={styles.campo}>
                         <Text style={styles.label}>Nombre Paciente</Text>
@@ -77,6 +85,14 @@ const Formulario = ({ modalVisible }) => {
                         onChangeText={setSitnomas}
                         />
                     </View>
+                    <View style={styles.campo}>
+                        <Text style={styles.label}>Fecha Alta</Text>
+                        <View style={styles.picker}>
+                            <DatePicker date={fecha} onDateChange={ (date) => { date } } locale='es'/>    
+
+                        </View>
+                    </View>
+
                 </ScrollView>
             </View>
         </Modal>
@@ -117,7 +133,18 @@ const styles = StyleSheet.create({
     },
     inputSintomas:{
         height: 100,
+    },
+    picker:{
+        backgroundColor: '#374151',
+        borderRadius: 10,
+        marginBottom: 40
+    },
+    btnCancel: {
+
+    },
+    btnCancelText: {
+        
     }
-})
+});
 
 export default Formulario
