@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import DatePicker from 'react-native-date-picker';
 
 
-const Formulario = ({ modalVisible }) => {
+const Formulario = ({ modalVisible, setModalVisible }) => {
     
     const [paciente, setPaciente] = useState('');
     const [propietario, setPropietario] = useState('');
@@ -14,7 +14,7 @@ const Formulario = ({ modalVisible }) => {
 
   return (
 
-        <Modal animationType='slide' visible={modalVisible}>
+        <Modal animationType='slide' visible={modalVisible} >
             
             <View style={styles.container}>
                 <ScrollView>
@@ -23,7 +23,7 @@ const Formulario = ({ modalVisible }) => {
                     <Text style={styles.BoldHeader}>Cita</Text>
                     </Text>
 
-                    <Pressable style={styles.btnCancel}>
+                    <Pressable style={styles.btnCancel} onPressOut={ () => setModalVisible(false) }>
                         <Text style={styles.btnCancelText}>X Cancelar</Text>
                     </Pressable>
 
@@ -140,10 +140,20 @@ const styles = StyleSheet.create({
         marginBottom: 40
     },
     btnCancel: {
-
+        marginVertical: 30,
+        backgroundColor: '#5827A4',
+        marginHorizontal: 30,
+        padding: 15,
+        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: '#fff'
     },
     btnCancelText: {
-        
+        color: '#fff',
+        textAlign: 'center',
+        fontWeight: 900,
+        fontSize: 16,
+        textTransform: 'uppercase',
     }
 });
 
