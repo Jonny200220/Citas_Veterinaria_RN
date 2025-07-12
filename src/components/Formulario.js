@@ -1,4 +1,4 @@
-import { View, Modal, StyleSheet, TextInput, Text, ScrollView, Pressable } from 'react-native';
+import { View, Modal, StyleSheet, TextInput, Text, ScrollView, Pressable, Alert } from 'react-native';
 import React, { useState } from 'react';
 import DatePicker from 'react-native-date-picker';
 
@@ -7,10 +7,34 @@ const Formulario = ({ modalVisible, setModalVisible }) => {
     
     const [paciente, setPaciente] = useState('');
     const [propietario, setPropietario] = useState('');
-    const [telefonoPropietario, setTelefonoPropietario] = useState('');
-    const [emailPropietario, setEmailPropietario] = useState('');
-    const [sitnomas, setSitnomas] = useState('');
+    const [telefono, setTelefono] = useState('');
+    const [email, setEmail] = useState('');
+    const [sintomas, setSintomas] = useState('');
     const [fecha, setFecha] = useState(new Date());
+
+    const handleCita = () => {
+        // Validar con .inlcudes(recorre todos los elementos y revisa que cumplan la condicion())
+
+        if( [paciente, propietario, telefono, email, sintomas, fecha].includes('') ){
+            
+            Alert.alert(
+                'Error',
+                'Todos los campos son obligatorios.',
+                [{text: 'Reintentar'}]
+            );
+            return;
+        };
+
+        nuevoPaciente = {
+            paciente,
+            propietario,
+            telefono,
+            email,
+            sintomas,
+            fecha
+        }
+        console.log(nuevoPaciente);
+    }
 
   return (
 
@@ -56,8 +80,8 @@ const Formulario = ({ modalVisible, setModalVisible }) => {
                         placeholderTextColor={'#666'}
                         placeholder='Telefono Propietario'
                         keyboardType='phone-pad'
-                        value={telefonoPropietario}
-                        onChangeText={setTelefonoPropietario}
+                        value={telefono}
+                        onChangeText={setTelefono}
                         />
                     </View>
 
@@ -68,9 +92,16 @@ const Formulario = ({ modalVisible, setModalVisible }) => {
                         placeholderTextColor={'#666'}
                         placeholder='Email Propietario'
                         keyboardType='email-address'
-                        value={emailPropietario}
-                        onChangeText={setEmailPropietario}
+                        value={email}
+                        onChangeText={setEmail}
                         />
+                    </View>
+
+                    <View style={styles.campo}>
+                        <Text style={styles.label}>Fecha Alta</Text>
+                        <View style={styles.picker}>
+                            <DatePicker date={fecha} locale='es' onDateChange={ (date) => setFecha(date) }/>    
+                        </View>
                     </View>
 
                     <View style={styles.campo}>
@@ -78,20 +109,16 @@ const Formulario = ({ modalVisible, setModalVisible }) => {
                         <TextInput
                         style={[styles.input, styles.inputSintomas]}
                         placeholderTextColor={'#666'}
-                        placeholder='Sintomas del Paciente'
                         multiline={true}
                         numberOfLines={4}
-                        value={sitnomas}
-                        onChangeText={setSitnomas}
+                        value={sintomas}
+                        onChangeText={setSintomas}
                         />
                     </View>
-                    <View style={styles.campo}>
-                        <Text style={styles.label}>Fecha Alta</Text>
-                        <View style={styles.picker}>
-                            <DatePicker date={fecha} onDateChange={ (date) => { date } } locale='es'/>    
 
-                        </View>
-                    </View>
+                    <Pressable style={styles.btnAdd} onPress={handleCita}>
+                        <Text style={styles.btnAddText}>Agregar Paciente</Text>
+                    </Pressable>
 
                 </ScrollView>
             </View>
@@ -121,23 +148,23 @@ const styles = StyleSheet.create({
     },
     input: {
         backgroundColor: '#fff',
+        padding: 15 ,
         borderRadius: 10,
-        padding: 15,
     },
     label: {
         color: '#fff',
         marginBottom: 10,
         marginTop: 15,
-        fontSize: 28,
+        fontSize: 20,
         fontWeight: 600,
     },
     inputSintomas:{
         height: 100,
     },
     picker:{
-        backgroundColor: '#374151',
+        backgroundColor: '#666',
         borderRadius: 10,
-        marginBottom: 40
+        marginBottom: 10,
     },
     btnCancel: {
         marginVertical: 30,
@@ -154,7 +181,22 @@ const styles = StyleSheet.create({
         fontWeight: 900,
         fontSize: 16,
         textTransform: 'uppercase',
+    },
+    btnAdd:{
+        marginVertical: 50,
+        backgroundColor: '#F59E0B',
+        paddingVertical: 15,
+        marginHorizontal: 30,
+        borderRadius: 10,
+    },
+    btnAddText:{
+        textAlign: 'center',
+        color: '#5827A4',
+        textTransform: 'uppercase',
+        fontWeight: '900',
+        fontSize: 16,
     }
+
 });
 
 export default Formulario
