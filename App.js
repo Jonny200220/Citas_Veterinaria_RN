@@ -15,7 +15,7 @@ const App = () => {
           <Text style={styles.boldHeader}>Veterinaria</Text>
       </Text>
 
-      <Pressable style={styles.btnNewCita} onPress={() => setModalVisible(true)}>
+      <Pressable style={styles.btnNewCita} onPress={ () => setModalVisible(true) }>
         <Text style={styles.textBtnNewCita} >Nueva Cita</Text>
       </Pressable>
       <Formulario modalVisible={modalVisible} setModalVisible={setModalVisible} />
