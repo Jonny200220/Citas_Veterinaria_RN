@@ -3,7 +3,9 @@ import React, { useState } from 'react';
 import DatePicker from 'react-native-date-picker';
 
 
-const Formulario = ({ modalVisible, setModalVisible }) => {
+const Formulario = ({ modalVisible, setModalVisible, setPacientes, pacientes }) => {
+    
+    
     
     const [paciente, setPaciente] = useState('');
     const [propietario, setPropietario] = useState('');
@@ -25,7 +27,7 @@ const Formulario = ({ modalVisible, setModalVisible }) => {
             return;
         };
 
-        nuevoPaciente = {
+       const nuevoPaciente = {
             paciente,
             propietario,
             telefono,
@@ -33,7 +35,8 @@ const Formulario = ({ modalVisible, setModalVisible }) => {
             sintomas,
             fecha
         }
-        console.log(nuevoPaciente);
+        // Toma una copia del array de pacientes y agrega el nuevo paciente
+        setPaciente(...pacientes, nuevoPaciente);
     }
 
   return (
@@ -110,7 +113,7 @@ const Formulario = ({ modalVisible, setModalVisible }) => {
                         style={[styles.input, styles.inputSintomas]}
                         placeholderTextColor={'#666'}
                         multiline={true}
-                        numberOfLines={4}
+                        numberOfLines={3}
                         value={sintomas}
                         onChangeText={setSintomas}
                         />
@@ -196,7 +199,6 @@ const styles = StyleSheet.create({
         fontWeight: '900',
         fontSize: 16,
     }
-
 });
 
 export default Formulario

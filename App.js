@@ -7,6 +7,7 @@ const App = () => {
 
   // Hooks
   const [modalVisible, setModalVisible] = useState(false)
+  const [pacientes, setPacientes] = useState([]);
   
   return (
     <SafeAreaView style={styles.container}>
@@ -18,7 +19,12 @@ const App = () => {
       <Pressable style={styles.btnNewCita} onPress={ () => setModalVisible(true) }>
         <Text style={styles.textBtnNewCita} >Nueva Cita</Text>
       </Pressable>
-      <Formulario modalVisible={modalVisible} setModalVisible={setModalVisible} />
+      <Formulario 
+      modalVisible={modalVisible} 
+      setModalVisible={setModalVisible} 
+      setPacientes={setPacientes}
+      pacientes={pacientes}
+      />
 
     </SafeAreaView>
   );
