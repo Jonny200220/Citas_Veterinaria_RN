@@ -37,6 +37,7 @@ const Formulario = ({ modalVisible, setModalVisible, setPacientes, pacientes }) 
         }
         // Toma una copia del array de pacientes y agrega el nuevo paciente
         setPaciente(...pacientes, nuevoPaciente);
+        setModalVisible(!modalVisible);
     }
 
   return (
@@ -165,7 +166,7 @@ const styles = StyleSheet.create({
         height: 100,
     },
     picker:{
-        backgroundColor: '#666',
+        backgroundColor: '#fff',
         borderRadius: 10,
         marginBottom: 10,
     },
