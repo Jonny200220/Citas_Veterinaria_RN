@@ -22,22 +22,37 @@ const Formulario = ({ modalVisible, setModalVisible, setPacientes, pacientes }) 
             Alert.alert(
                 'Error',
                 'Todos los campos son obligatorios.',
-                [{text: 'Reintentar'}]
+                [{text: 'Ok'}]
             );
             return;
         };
 
+        /*
+            La variable id es un identificador único para cada cita
+            Se puede usar Date.now() para obtener un timestamp único
+            o usar un contador que se incremente con cada nueva cita
+        */
        const nuevoPaciente = {
-            paciente,
-            propietario,
-            telefono,
-            email,
-            sintomas,
-            fecha
+        id: Date.now(),
+        paciente,
+        propietario,
+        telefono,
+        email,
+        sintomas,
+        fecha
         }
+
         // Toma una copia del array de pacientes y agrega el nuevo paciente
-        setPaciente(...pacientes, nuevoPaciente);
+        setPacientes([...pacientes, nuevoPaciente]);
+        
         setModalVisible(!modalVisible);
+        // Reiniciar el formulario
+        setPaciente('');
+        setPropietario('');
+        setTelefono('');
+        setEmail('');
+        setSintomas('');
+        setFecha(new Date());
     }
 
   return (
@@ -166,7 +181,7 @@ const styles = StyleSheet.create({
         height: 100,
     },
     picker:{
-        backgroundColor: '#fff',
+        backgroundColor: '#666',
         borderRadius: 10,
         marginBottom: 10,
     },
