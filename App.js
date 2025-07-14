@@ -1,7 +1,7 @@
-import { View, Text, SafeAreaView, StyleSheet, Pressable, Modal} from 'react-native'
+import { View, Text, SafeAreaView, StyleSheet, Pressable, Modal, FlatList} from 'react-native'
 import { useState } from 'react';
 import Formulario from './src/components/Formulario';
-
+import Paciente from './src/components/Paciente';
 
 const App = () => {
 
@@ -19,6 +19,19 @@ const App = () => {
       <Pressable style={styles.btnNewCita} onPress={ () => setModalVisible(true) }>
         <Text style={styles.textBtnNewCita} >Nueva Cita</Text>
       </Pressable>
+      {pacientes.length === 0 ? 
+      <Text style={styles.noPacientes}>No hay Pacientes Aún</Text> : 
+      <FlatList
+      data={pacientes}
+      keyExtractor={(item) => item.id}
+      renderItem={() =>{
+        return(
+          // Aquí se renderiza el componente Paciente
+          <Paciente/>
+        )
+        
+      }}
+      />}
       <Formulario 
       modalVisible={modalVisible} 
       setModalVisible={setModalVisible} 
@@ -60,7 +73,14 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '900',
     textTransform: 'uppercase'
+  },
+  noPacientes: {
+    textAlign: 'center',
+    marginVertical: 40,
+    fontSize: 25,
+    fontWeight: '600',
   }
+
 })
 
 export default App
