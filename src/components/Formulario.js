@@ -1,22 +1,36 @@
 import { View, Modal, StyleSheet, TextInput, Text, ScrollView, Pressable, Alert } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-native-date-picker';
 
-
-const Formulario = ({ modalVisible, setModalVisible, setPacientes, pacientes }) => {
-    
+                                                                                // se renombra el paciente para evitar confusiones
+                                                                                // pacienteObj es el paciente que se está editando
+const Formulario = ({ modalVisible, setModalVisible, setPacientes, pacientes, paciente: pacienteObj }) => {
     
     
     const [paciente, setPaciente] = useState('');
+    const [id, setId] = useState('');
     const [propietario, setPropietario] = useState('');
     const [telefono, setTelefono] = useState('');
     const [email, setEmail] = useState('');
     const [sintomas, setSintomas] = useState('');
     const [fecha, setFecha] = useState(new Date());
 
+    useEffect( () => {
+        // Si pacienteObj tiene datos, significa que se está editando un paciente
+        // se asignan los valores del paciente a los estados
+        if(Object.keys(pacienteObj).length > 0){
+        setId(pacienteObj.id);
+        setPaciente(pacienteObj.paciente);
+        setPropietario(pacienteObj.propietario);
+        setTelefono(pacienteObj.telefono);
+        setEmail(pacienteObj.email);
+        setSintomas(pacienteObj.sintomas);
+        setFecha(new Date(pacienteObj.fecha));
+       }
+    }, []);
+
     const handleCita = () => {
         // Validar con .inlcudes(recorre todos los elementos y revisa que cumplan la condicion())
-
         if( [paciente, propietario, telefono, email, sintomas, fecha].includes('') ){
             
             Alert.alert(
@@ -26,6 +40,8 @@ const Formulario = ({ modalVisible, setModalVisible, setPacientes, pacientes }) 
             );
             return;
         };
+
+        // Revisar si es un registro nuevo o una edición
 
         /*
             La variable id es un identificador único para cada cita
@@ -40,10 +56,22 @@ const Formulario = ({ modalVisible, setModalVisible, setPacientes, pacientes }) 
         email,
         sintomas,
         fecha
+        };
+
+        if(id){
+            // Editando
+            nuevoPaciente.id = id;
+            const pacientesActualizados = pacientes.map( pacienteState => 
+                pacienteState.id === nuevoPaciente.id ? nuevoPaciente : pacienteState );
+            setPacientes(pacientesActualizados);
+                
+        }else{
+            nuevoPaciente.id = Date.now();
+            setPacientes([...pacientes, nuevoPaciente]);
         }
 
         // Toma una copia del array de pacientes y agrega el nuevo paciente
-        setPacientes([...pacientes, nuevoPaciente]);
+        // setPacientes([...pacientes, nuevoPaciente]);
         
         setModalVisible(!modalVisible);
         // Reiniciar el formulario
