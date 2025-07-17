@@ -6,8 +6,21 @@ import Paciente from './src/components/Paciente';
 const App = () => {
 
   // Hooks
-  const [modalVisible, setModalVisible] = useState(false)
+  const [modalVisible, setModalVisible] = useState(false);
   const [pacientes, setPacientes] = useState([]);
+  const [paciente, setPaciente] = useState({});
+
+  // Funciones
+  const handleEditPaciente = (id) => {
+    /**
+     * Lo que hace exactamente esta función es filtrar el array de pacientes
+     * y obtener el paciente que se quiere editar para luego
+     * mostrarlo en el formulario de edición.
+     */
+    const pacienteEditar = pacientes.filter( paciente => paciente.id === id );
+    setPaciente(pacienteEditar[0]);
+    
+  };
   
   return (
     <SafeAreaView style={styles.container}>
@@ -21,13 +34,23 @@ const App = () => {
       </Pressable>
       {pacientes.length === 0 ? 
       <Text style={styles.noPacientes}>No hay Pacientes Aún</Text> : 
+      /* FlatList esta optimizada para listas largas 
+         ya que solo renderiza los elementos visibles en pantalla
+         y no todos los elementos del array de pacientes.
+      */
       <FlatList
+      style={{marginTop: 50, marginHorizontal: 50}}
       data={pacientes}
       keyExtractor={(item) => item.id}
-      renderItem={() =>{
+      renderItem={({item}) =>{
         return(
           // Aquí se renderiza el componente Paciente
-          <Paciente/>
+          <Paciente
+          item={item}
+          setModalVisible={setModalVisible}
+          handleEditPaciente ={handleEditPaciente}
+          />
+
         )
         
       }}
@@ -37,6 +60,7 @@ const App = () => {
       setModalVisible={setModalVisible} 
       setPacientes={setPacientes}
       pacientes={pacientes}
+      paciente={paciente}
       />
 
     </SafeAreaView>
