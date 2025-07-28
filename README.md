@@ -1,6 +1,6 @@
 # 🐾 Veterinary Appointment Scheduler
 
-**by ValkyrieX Company**
+**by SymbioseCorp**
 
 Este proyecto es una aplicación móvil desarrollada con **React Native** y el framework **Expo**, creada por **ValkyrieX Company**. La aplicación permite a usuarios y clínicas veterinarias **agendar, gestionar y visualizar citas médicas para mascotas** de manera sencilla, rápida y eficiente.
 
